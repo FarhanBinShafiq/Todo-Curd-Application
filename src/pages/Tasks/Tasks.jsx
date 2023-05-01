@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import Loading from '../Loading/Loading';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
  
@@ -7,8 +8,8 @@ import { AuthContext } from '../../contexts/AuthProvider';
 const Tasks = () => {
 
     const [tasks, setTask] = useState([])
-    const {user}=useContext(AuthContext)
-    
+    const { user,loading } = useContext(AuthContext)
+
 
 
     useEffect(() => {
@@ -23,7 +24,9 @@ const Tasks = () => {
 
 
    
-
+ if(loading){
+        return <Loading></Loading>
+    }
 
     const handleDeleteTask = (task) => {
         const deleteTask = window.confirm(`Are you want to delete  ${task.title}`)
@@ -55,7 +58,7 @@ const Tasks = () => {
 
             {
                 tasks.map(task =>
-                    <div className='py-8'>
+                    <div className='py-8' key={task._id}>
                         <div className="card w-full bg-black shadow-xl">
                             <div className='flex text-teal-500 uppercase items-center justify-center gap-36'>
                                 <div className=''>
